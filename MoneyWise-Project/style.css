@@ -1,0 +1,510 @@
+/* =================================
+   1. VARIABLES & SETUP
+   ================================= */
+
+/* ตัวแปรสีและฟอนต์หลักของเว็บไซต์ */
+:root {
+  --primary-color: #2d6a4f;
+  --primary-hover: #40916c;
+  --accent-color: #90be6d;
+  --text-color: #333;
+  --bg-color: #f8f8f8;
+  --card-bg-color: #ffffff;
+  --light-text-color: #fff;
+  --main-font: 'IBM Plex Sans', sans-serif;
+  --base-radius: 8px;
+}
+
+
+/* =================================
+   2. GLOBAL RESETS & BASE STYLES
+   ================================= */
+
+/* Reset ค่าเริ่มต้นของ Browser */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* สไตล์พื้นฐานของหน้า */
+body {
+  font-family: var(--main-font);
+  line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* สไตล์หัวข้อโดยรวม */
+h1, h2, h3, h4 {
+  font-weight: 700;
+}
+
+
+/* =================================
+   3. LAYOUT STRUCTURE
+   ================================= */
+
+/* โครงสร้างหลักของหน้า (Header, Main, Footer) */
+header {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  padding: 20px;
+  text-align: center;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  list-style: none;
+  margin-top: 10px;
+}
+
+nav a {
+  color: var(--light-text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 4px;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+/* สไตล์สำหรับลิงก์ของหน้าปัจจุบัน (Active) */
+nav a[aria-current="page"] {
+  border-bottom: 2px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* สไตล์เมื่อใช้คีย์บอร์ดเลือกเมนู */
+nav a:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+main {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+footer {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+
+/* =================================
+   4. REUSABLE COMPONENTS
+   ================================= */
+
+/* Component: Buttons */
+.btn {
+  display: inline-block;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 12px 25px;
+  font-size: 1em;
+  border-radius: var(--base-radius);
+  transition: all 0.3s ease;
+  font-family: var(--main-font);
+}
+
+.btn-primary {
+  color: var(--light-text-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.remove-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: var(--base-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+/* Component: Topic Cards (Homepage) */
+.topics {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.topic-card {
+  background: var(--card-bg-color);
+  padding: 20px;
+  border-radius: var(--base-radius);
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1; 
+  min-width: 280px;
+}
+
+.topic-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.topic-card h3 {
+  margin-bottom: 10px;
+}
+
+.topic-card p {
+  flex-grow: 1;
+}
+
+/* ทำให้การ์ดทั้งใบเป็นลิงก์ (Stretched Link) */
+.topic-card .card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.topic-card .card-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.topic-card a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: var(--light-text-color);
+  background-color: var(--primary-color);
+  border-radius: 6px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+/* Component: Interactive Tools (Calculators, Planners) */
+.interactive-tools-section {
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+}
+
+.tool-container {
+  background-color: #fdfdfd;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+  border-top: 5px solid var(--primary-color);
+}
+
+.tool-container h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.tool-container > p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sub-Component: Forms */
+.planner-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--base-radius);
+  font-size: 1em;
+  font-family: var(--main-font);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
+}
+
+.form-actions {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.form-question {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: var(--base-radius);
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500 !important;
+  margin-bottom: 0 !important;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Sub-Component: Calculator Results */
+.calculator-result {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed #ccc;
+}
+
+.placeholder-text {
+  color: #888;
+  text-align: center;
+  font-style: italic;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: var(--base-radius);
+  border: 1px dashed #ccc;
+}
+
+.calculator-result .final-result {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 15px !important;
+  background-color: #e9f5db;
+  padding: 10px;
+  border-radius: var(--base-radius);
+}
+
+.risk-result-content {
+  padding: 20px;
+  border-left-width: 5px;
+  border-left-style: solid;
+  border-radius: var(--base-radius);
+}
+.risk-result-content.conservative { border-left-color: #007bff; background-color: #f0f8ff; }
+.risk-result-content.balanced { border-left-color: #ffc107; background-color: #fff9e6; }
+.risk-result-content.aggressive { border-left-color: #dc3545; background-color: #fbeaea; }
+.risk-result-content h4 { margin-top: 0; margin-bottom: 10px; font-size: 1.2em; }
+.risk-result-content p { margin-bottom: 0; }
+
+/* Sub-Component: Debt List Display */
+.debt-list-container {
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+.debt-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--base-radius);
+  margin-bottom: 10px;
+}
+.debt-item .debt-info { display: flex; flex-direction: column; }
+.debt-item .debt-info strong { font-size: 1.1em; margin-bottom: 5px; }
+.debt-item .debt-info span { font-size: 0.9em; color: #555; }
+
+/* Component: FAQ Accordion */
+.faq-container { margin-top: 20px; }
+.faq-item { background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: var(--base-radius); margin-bottom: 10px; transition: background-color 0.2s ease; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item[open] { background-color: #fff; }
+.faq-question { padding: 15px 20px; font-weight: 700; cursor: pointer; position: relative; list-style: none; display: block; }
+.faq-question::after { content: '+'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 1.5em; font-weight: 500; color: var(--primary-color); transition: transform 0.3s ease; }
+.faq-item[open] .faq-question::after { content: '−'; transform: translateY(-50%) rotate(180deg); }
+.faq-answer { padding: 0 20px 20px 20px; color: #333; line-height: 1.7; }
+.faq-answer ul { padding-left: 20px; margin-top: 10px; }
+
+/* Component: Visuals (Images & SVG) */
+.content-image {
+  display: block;
+  max-width: 50%;
+  height: auto;
+  margin: 30px auto;
+  border-radius: var(--base-radius);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.visual-aid-container {
+  margin: 40px auto;
+  text-align: center;
+  max-width: 500px;
+}
+.visual-aid-container svg { width: 100%; max-width: 450px; height: auto; border: 1px solid #e0e0e0; border-radius: var(--base-radius); padding: 10px; background-color: #fdfdfd; }
+.visual-caption { font-size: 0.9em; color: #666; margin-top: 10px; font-style: italic; }
+
+/* SVG specific styles */
+.svg-line { stroke: #ccc; stroke-width: 2; }
+.svg-label { font-family: var(--main-font); font-size: 12px; fill: #555; }
+.svg-text { font-family: var(--main-font); font-size: 14px; font-weight: 500; fill: var(--text-color); }
+.svg-text-light { font-family: var(--main-font); font-size: 14px; font-weight: 700; fill: var(--light-text-color); }
+.svg-box-income { fill: var(--primary-hover); }
+.svg-box-spending { fill: #f2f2f2; }
+.svg-box-emergency { fill: #fff3cd; }
+.svg-box-saving { fill: #d1e7dd; }
+.svg-bar { fill: var(--primary-color); transition: all 0.3s ease; }
+.visual-aid-container:hover .svg-bar { fill: var(--primary-hover); }
+.line-savings, .line-funds, .line-stocks { fill: none; stroke-width: 3; stroke-linecap: round; }
+.line-savings { stroke: #6c757d; stroke-dasharray: 5,5; }
+.line-funds { stroke: #007bff; }
+.line-stocks { stroke: var(--primary-hover); }
+.legend-savings { fill: #6c757d; }
+.legend-funds { fill: #007bff; }
+.legend-stocks { fill: var(--primary-hover); }
+
+/* Component: Scroll to Top Button */
+#scrollToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scrollToTopBtn:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+/* =================================
+   5. PAGE-SPECIFIC SECTIONS
+   ================================= */
+
+/* Section: Hero Banner */
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Section: Main Content Box */
+.content-details {
+  background-color: var(--card-bg-color);
+  padding: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.content-details ul, .content-details ol { padding-left: 25px; margin-bottom: 15px; }
+.content-details li { margin-bottom: 10px; padding-left: 5px; }
+.content-details ul ul { list-style-type: circle; margin-top: 10px; }
+
+/* Section: External Resource Links */
+.resource-links {
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+  padding: 30px;
+  background-color: #e9f5db;
+  border-radius: var(--base-radius);
+  border: 1px solid #cce3b3;
+}
+.resource-links h3 { text-align: center; margin-bottom: 10px; color: var(--primary-color); }
+.resource-links .section-intro { text-align: center; color: #555; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.resource-links ul { list-style: none; padding: 0; }
+.resource-links li { padding: 20px 0; border-bottom: 1px solid #cce3b3; }
+.resource-links li:last-child { border-bottom: none; }
+.resource-links li a { font-weight: 700; color: var(--primary-hover); text-decoration: none; font-size: 1.1em; }
+.resource-links li a:hover { text-decoration: underline; }
+.resource-links .resource-desc { margin-top: 5px; margin-bottom: 0; font-size: 0.95em; color: #333; }
+
+
+/* =================================
+   6. RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 768px) {
+  main {
+    padding: 20px;
+  }
+
+  nav ul {
+    gap: 20px;
+  }
+  
+  .content-details {
+    padding: 20px;
+  }
+}
